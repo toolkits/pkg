@@ -76,6 +76,24 @@ func Unlink(fp string) error {
 	return os.Remove(fp)
 }
 
+// get file modified time
+func FileMTime(fp string) (int64, error) {
+	f, e := os.Stat(fp)
+	if e != nil {
+		return 0, e
+	}
+	return f.ModTime().Unix(), nil
+}
+
+// get file size as how many bytes
+func FileSize(fp string) (int64, error) {
+	f, e := os.Stat(fp)
+	if e != nil {
+		return 0, e
+	}
+	return f.Size(), nil
+}
+
 // list dirs under dirPath
 func DirsUnder(dirPath string) ([]string, error) {
 	if !IsExist(dirPath) {
@@ -99,6 +117,32 @@ func DirsUnder(dirPath string) ([]string, error) {
 			if name != "." && name != ".." {
 				ret = append(ret, name)
 			}
+		}
+	}
+
+	return ret, nil
+}
+
+// list files under dirPath
+func FilesUnder(dirPath string) ([]string, error) {
+	if !IsExist(dirPath) {
+		return []string{}, nil
+	}
+
+	fs, err := ioutil.ReadDir(dirPath)
+	if err != nil {
+		return []string{}, err
+	}
+
+	sz := len(fs)
+	if sz == 0 {
+		return []string{}, nil
+	}
+
+	ret := make([]string, 0, sz)
+	for i := 0; i < sz; i++ {
+		if !fs[i].IsDir() {
+			ret = append(ret, fs[i].Name())
 		}
 	}
 
@@ -197,4 +241,8 @@ func MD5(file string) (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(h.Sum(nil)), nil
+}
+
+func OpenLogFile(fp string) (*os.File, error) {
+	return os.OpenFile(fp, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 }

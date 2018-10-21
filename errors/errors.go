@@ -6,6 +6,14 @@ type PageError struct {
 	Message string
 }
 
+func (p PageError) Error() string {
+	return p.Message
+}
+
+func (p PageError) String() string {
+	return p.Message
+}
+
 func Bomb(format string, a ...interface{}) {
 	panic(PageError{Message: fmt.Sprintf(format, a...)})
 }

@@ -3,7 +3,6 @@ package str
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")

@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "2UmMbNHc8FBr98mJFN1k8ISOIHk=",
+			"path": "github.com/garyburd/redigo/internal",
+			"revision": "5f161ed9cfbce31e5a0ec0b1c3c81087e2e9cbef",
+			"revisionTime": "2017-12-14T08:01:08Z"
+		},
+		{
 			"checksumSHA1": "oGtyPvXPvHyHXGcixbc5AxvwtxY=",
 			"path": "github.com/garyburd/redigo/redis",
 			"revision": "5f161ed9cfbce31e5a0ec0b1c3c81087e2e9cbef",

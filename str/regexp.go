@@ -32,9 +32,9 @@ func IsMail(s string) bool {
 
 func IsPhone(s string) bool {
 	if strings.HasPrefix(s, "+") {
-		return IsMatch(s[1:], `\d{13}`)
+		return IsMatch(s[1:], `^\d{13}$`)
 	} else {
-		return IsMatch(s, `\d{11}`)
+		return IsMatch(s, `^\d{11}$`)
 	}
 }
 

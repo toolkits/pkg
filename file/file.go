@@ -12,6 +12,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -159,6 +160,24 @@ func ReadBytes(cpath string) ([]byte, error) {
 	}
 
 	return ioutil.ReadFile(cpath)
+}
+
+func ReadString(cpath string) (string, error) {
+	bs, err := ReadBytes(cpath)
+	if err != nil {
+		return "", err
+	}
+
+	return string(bs), nil
+}
+
+func ReadStringTrim(cpath string) (string, error) {
+	out, err := ReadString(cpath)
+	if err != nil {
+		return "", err
+	}
+
+	return strings.TrimSpace(out), nil
 }
 
 func ReadYaml(cpath string, cptr interface{}) error {

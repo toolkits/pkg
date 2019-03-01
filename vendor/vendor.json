@@ -15,6 +15,12 @@
 			"revisionTime": "2017-12-14T08:01:08Z"
 		},
 		{
+			"checksumSHA1": "2JH1DF82SAPY1JzD1iG4U7GZUcQ=",
+			"path": "github.com/json-iterator/go",
+			"revision": "5bc93205020f6311d7e4a34f82c5616a18ec35e5",
+			"revisionTime": "2019-02-08T07:56:42Z"
+		},
+		{
 			"checksumSHA1": "XzHDmND/Rq9/RLKBP2fnAtBJu2M=",
 			"path": "github.com/robfig/go-cache",
 			"revision": "9fc39e0dbf62c034ec4e45e6120fc69433a3ec51",

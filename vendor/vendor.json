@@ -15,10 +15,40 @@
 			"revisionTime": "2017-12-14T08:01:08Z"
 		},
 		{
+			"checksumSHA1": "2JH1DF82SAPY1JzD1iG4U7GZUcQ=",
+			"path": "github.com/json-iterator/go",
+			"revision": "5bc93205020f6311d7e4a34f82c5616a18ec35e5",
+			"revisionTime": "2019-02-08T07:56:42Z"
+		},
+		{
+			"checksumSHA1": "ZTcgWKWHsrX0RXYVXn5Xeb8Q0go=",
+			"path": "github.com/modern-go/concurrent",
+			"revision": "bacd9c7ef1dd9b15be4a9909b8ac7a4e313eec94",
+			"revisionTime": "2018-03-06T01:26:44Z"
+		},
+		{
+			"checksumSHA1": "qvH48wzTIV3QKSDqI0dLFtVjaDI=",
+			"path": "github.com/modern-go/reflect2",
+			"revision": "94122c33edd36123c84d5368cfb2b69df93a0ec8",
+			"revisionTime": "2018-07-18T01:23:57Z"
+		},
+		{
 			"checksumSHA1": "XzHDmND/Rq9/RLKBP2fnAtBJu2M=",
 			"path": "github.com/robfig/go-cache",
 			"revision": "9fc39e0dbf62c034ec4e45e6120fc69433a3ec51",
 			"revisionTime": "2013-03-06T15:13:11Z"
+		},
+		{
+			"checksumSHA1": "jAzqolwnRJhHsKXmmvKNrHqxqAw=",
+			"path": "github.com/spaolacci/murmur3",
+			"revision": "f09979ecbc725b9e6d41a297405f65e7e8804acc",
+			"revisionTime": "2018-01-18T20:28:30Z"
+		},
+		{
+			"checksumSHA1": "U5xtIP/Q3xAZNUz3iyURRMakhUw=",
+			"path": "github.com/ugorji/go/codec",
+			"revision": "b30ce92d500bfa0cea9bd56f104cf3eb339fd585",
+			"revisionTime": "2018-10-18T02:36:22Z"
 		},
 		{
 			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",

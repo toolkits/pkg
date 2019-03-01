@@ -13,6 +13,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"gopkg.in/yaml.v2"
 )
@@ -47,9 +48,52 @@ func Dir(fp string) string {
 	return path.Dir(fp)
 }
 
+func InsureDir(fp string) error {
+	if IsExist(fp) {
+		return nil
+	}
+	return os.MkdirAll(fp, os.ModePerm)
+}
+
 // mkdir dir if not exist
 func EnsureDir(fp string) error {
 	return os.MkdirAll(fp, os.ModePerm)
+}
+
+// ensure the datadir and make sure it's rw-able
+func EnsureDirRW(dataDir string) error {
+	err := EnsureDir(dataDir)
+	if err != nil {
+		return err
+	}
+
+	checkFile := fmt.Sprintf("%s/rw.%d", dataDir, time.Now().UnixNano())
+	fd, err := Create(checkFile)
+	if err != nil {
+		if os.IsPermission(err) {
+			return fmt.Errorf("open %s: rw permission denied", dataDir)
+		}
+		return err
+	}
+	Close(fd)
+	Remove(checkFile)
+
+	return nil
+}
+
+// create one file
+func Create(name string) (*os.File, error) {
+	return os.Create(name)
+}
+
+// remove one file
+func Remove(name string) error {
+	return os.Remove(name)
+}
+
+// close fd
+func Close(fd *os.File) error {
+	return fd.Close()
 }
 
 // IsExist checks whether a file or directory exists.

@@ -1,7 +1,6 @@
 package param
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,6 +8,8 @@ import (
 	"strings"
 
 	"pkg/errors"
+
+	"github.com/json-iterator/go"
 )
 
 func String(r *http.Request, key string, defVal string) string {
@@ -173,6 +174,8 @@ func BindJson(r *http.Request, obj interface{}) error {
 	}
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
+
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(body, obj)
 	if err != nil {
 		return fmt.Errorf("unmarshal body %s err:%v", string(body), err)

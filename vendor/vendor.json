@@ -45,6 +45,12 @@
 			"revisionTime": "2018-01-18T20:28:30Z"
 		},
 		{
+			"checksumSHA1": "U5xtIP/Q3xAZNUz3iyURRMakhUw=",
+			"path": "github.com/ugorji/go/codec",
+			"revision": "b30ce92d500bfa0cea9bd56f104cf3eb339fd585",
+			"revisionTime": "2018-10-18T02:36:22Z"
+		},
+		{
 			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",
 			"path": "gopkg.in/yaml.v2",
 			"revision": "5420a8b6744d3b0345ab293f6fcba19c978f1183",

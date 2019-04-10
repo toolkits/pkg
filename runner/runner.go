@@ -23,7 +23,9 @@ func Init() {
 	var err error
 	Hostname, err = os.Hostname()
 	if err != nil {
-		log.Fatalln("cannot get hostname")
+		log.Fatalln("[F] cannot get hostname")
+	} else {
+		log.Println("[I] hostname -> " + Hostname)
 	}
 
 	Cwd = file.SelfDir()

@@ -9,6 +9,7 @@ var FSSPEC_IGNORE = map[string]struct{}{
 	"none":  struct{}{},
 	"nodev": struct{}{},
 	"tmpfs": struct{}{},
+	"shm":   struct{}{},
 }
 
 var FSTYPE_IGNORE = map[string]struct{}{
@@ -26,7 +27,6 @@ var FSFILE_PREFIX_IGNORE = []string{
 	"/misc",
 	"/proc",
 	"/lib",
-	"/var/lib/docker",
 }
 
 func IgnoreFsFile(fs_file string) bool {

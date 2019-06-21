@@ -10,6 +10,7 @@ var FSSPEC_IGNORE = map[string]struct{}{
 	"nodev": struct{}{},
 	"tmpfs": struct{}{},
 	"shm":   struct{}{},
+	"proc":  struct{}{},
 }
 
 var FSTYPE_IGNORE = map[string]struct{}{

@@ -63,5 +63,13 @@ func Dangerous(s string) bool {
 		return true
 	}
 
+	if strings.Contains(s, "file://") {
+		return true
+	}
+
+	if strings.Contains(s, "../") {
+		return true
+	}
+
 	return false
 }

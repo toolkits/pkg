@@ -39,7 +39,7 @@ func ContainsString(sl []string, v string) bool {
 
 func ContainsSlice(smallSlice, bigSlice []string) bool {
 	for i := 0; i < len(smallSlice); i++ {
-		if !ContainsString(smallSlice[i], bigSlice) {
+		if !ContainsString(bigSlice, smallSlice[i]) {
 			return false
 		}
 	}

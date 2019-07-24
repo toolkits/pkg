@@ -10,7 +10,7 @@ import (
 	"github.com/json-iterator/go"
 )
 
-func PostJSON(url string, timeout int, v interface{}) (response []byte, err error) {
+func PostJSON(url string, timeout int, v interface{}, headers map[string]string) (response []byte, err error) {
 	var bs []byte
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
@@ -25,8 +25,15 @@ func PostJSON(url string, timeout int, v interface{}) (response []byte, err erro
 		Timeout: time.Duration(timeout) * time.Second,
 	}
 
+	req, err := http.NewRequest("POST", url, bf)
+	req.Header.Set("Content-Type", "application/json")
+	
+	for k, v := range headers {
+		req.Header.Add(k, v)
+	}
+
 	var resp *http.Response
-	resp, err = client.Post(url, "application/json", bf)
+	resp, err = client.Do(req)
 	if err != nil {
 		return
 	}

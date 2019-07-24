@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 func KernelMaxFiles() (uint64, error) {

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 func Snmp(title string) (ret map[string]int64, err error) {

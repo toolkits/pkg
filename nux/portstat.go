@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
-	"pkg/slice"
-	"pkg/sys"
+	"github.com/toolkits/pkg/file"
+	"github.com/toolkits/pkg/slice"
+	"github.com/toolkits/pkg/sys"
 )
 
 // ListeningPorts 为了兼容老代码

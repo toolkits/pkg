@@ -2,9 +2,10 @@ package sys
 
 import (
 	"fmt"
-	"pkg/file"
 	"strconv"
 	"strings"
+
+	"github.com/toolkits/pkg/file"
 )
 
 func PidsByCmdline(cmdline string) []int {

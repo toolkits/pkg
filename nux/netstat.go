@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 // @param ext e.g. TcpExt or IpExt

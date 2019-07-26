@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"strings"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 func NumCpu() int {

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"pkg/slice"
-	"pkg/runner"
-	"pkg/file"
+
+	"github.com/toolkits/pkg/file"
+	"github.com/toolkits/pkg/runner"
+	"github.com/toolkits/pkg/slice"
 )
 
 func main() {

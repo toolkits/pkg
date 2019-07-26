@@ -5,9 +5,10 @@ import (
 	"log"
 	"math/rand"
 	"os"
-	"pkg/file"
 	"runtime"
 	"time"
+
+	"github.com/toolkits/pkg/file"
 )
 
 var (

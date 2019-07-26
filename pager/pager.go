@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"pkg/conv"
+	"github.com/toolkits/pkg/conv"
 )
 
 type Paginator struct {

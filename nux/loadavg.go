@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 type Loadavg struct {

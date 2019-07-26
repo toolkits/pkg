@@ -8,7 +8,7 @@ import (
 	"strings"
 	"syscall"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 // return: [][$fs_spec, $fs_file, $fs_vfstype]

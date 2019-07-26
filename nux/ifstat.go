@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"pkg/file"
-	"pkg/sys"
+	"github.com/toolkits/pkg/file"
+	"github.com/toolkits/pkg/sys"
 )
 
 const (

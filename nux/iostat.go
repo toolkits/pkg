@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"pkg/file"
+	"github.com/toolkits/pkg/file"
 )
 
 type DiskStats struct {

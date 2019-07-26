@@ -17,6 +17,7 @@ type SMTP struct {
 	Port                 int
 	MaxMailContentLength int
 	SSL                  bool
+	StartTLS             bool
 }
 
 type Mail struct {
@@ -45,7 +46,7 @@ func (m Mail) Validate(max int) error {
 	return nil
 }
 
-func NewSMTP(fromMail, fromName, username, password, host string, port int, ssl bool) *SMTP {
+func NewSMTP(fromMail, fromName, username, password, host string, port int, ssl, startTLS bool) *SMTP {
 	return &SMTP{
 		FromMail:             fromMail,
 		FromName:             fromName,
@@ -56,6 +57,7 @@ func NewSMTP(fromMail, fromName, username, password, host string, port int, ssl 
 		Port:                 port,
 		MaxMailContentLength: 102400,
 		SSL:                  ssl,
+		StartTLS:             startTLS,
 	}
 }
 
@@ -91,6 +93,7 @@ func (s *SMTP) Send(mail Mail) error {
 		mail.Tos,
 		[]byte(message),
 		s.SSL,
+		s.StartTLS,
 	)
 
 	if err != nil {
@@ -100,16 +103,17 @@ func (s *SMTP) Send(mail Mail) error {
 	return nil
 }
 
-func send(addr string, auth smtp.Auth, from string, tos []string, body []byte, ssl bool) error {
+func send(addr string, auth smtp.Auth, from string, tos []string, body []byte, ssl, startTLS bool) error {
+	host := strings.Split(addr, ":")[0]
+
+	tlsconfig := &tls.Config{
+		InsecureSkipVerify: true,
+		ServerName:         host,
+	}
+
 	var c *smtp.Client
 	var err error
 	if ssl {
-		host := strings.Split(addr, ":")[0]
-		tlsconfig := &tls.Config{
-			InsecureSkipVerify: true,
-			ServerName:         host,
-		}
-
 		conn, err := tls.Dial("tcp", addr, tlsconfig)
 		if err != nil {
 			return fmt.Errorf("tls dial %s fail: %s", addr, err)
@@ -123,6 +127,13 @@ func send(addr string, auth smtp.Auth, from string, tos []string, body []byte, s
 		c, err = smtp.Dial(addr)
 		if err != nil {
 			return fmt.Errorf("dial %s fail: %v", addr, err)
+		}
+
+		if startTLS {
+			err = c.StartTLS(tlsconfig)
+			if err != nil {
+				return fmt.Errorf("cannot starttls: addr: %s, err: %v", addr, err)
+			}
 		}
 	}
 

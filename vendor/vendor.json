@@ -51,6 +51,12 @@
 			"revisionTime": "2018-10-18T02:36:22Z"
 		},
 		{
+			"checksumSHA1": "o1fLrwRsHDaR6OSB/Fm28rkWpag=",
+			"path": "go.uber.org/automaxprocs",
+			"revision": "823363ffcd16c8f3ebaa3a067550d97c70f52194",
+			"revisionTime": "2019-05-02T05:17:12Z"
+		},
+		{
 			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",
 			"path": "gopkg.in/yaml.v2",
 			"revision": "5420a8b6744d3b0345ab293f6fcba19c978f1183",

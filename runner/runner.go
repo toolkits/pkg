@@ -5,35 +5,18 @@ import (
 	"log"
 	"math/rand"
 	"os"
-	"runtime"
-	"strconv"
 	"time"
 
 	"github.com/toolkits/pkg/file"
+	_ "go.uber.org/automaxprocs"
 )
 
 var (
-	Hostname  string
-	Cwd       string
-	CPUNumber int
+	Hostname string
+	Cwd      string
 )
 
-func getCPUNumber() int {
-	if value, exist := os.LookupEnv("GOMAXPROCS"); exist {
-		if cpunum, err := strconv.Atoi(value); err != nil {
-			log.Fatalf("[F] cannot convert env:GOMAXPROCS[%s] %v\n", value, err)
-		} else {
-			return cpunum
-		}
-	}
-
-	return runtime.NumCPU()
-}
-
 func Init() {
-	CPUNumber = getCPUNumber()
-	runtime.GOMAXPROCS(CPUNumber)
-
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 
 	var err error

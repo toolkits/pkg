@@ -6,18 +6,33 @@ import (
 	"math/rand"
 	"os"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/toolkits/pkg/file"
 )
 
 var (
-	Hostname string
-	Cwd      string
+	Hostname  string
+	Cwd       string
+	CPUNumber int
 )
 
+func getCPUNumber() int {
+	if value, exist := os.LookupEnv("GOMAXPROCS"); exist {
+		if cpunum, err := strconv.Atoi(value); err != nil {
+			log.Fatalf("[F] cannot convert env:GOMAXPROCS[%s] %v\n", value, err)
+		} else {
+			return cpunum
+		}
+	}
+
+	return runtime.NumCPU()
+}
+
 func Init() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	CPUNumber = getCPUNumber()
+	runtime.GOMAXPROCS(CPUNumber)
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 

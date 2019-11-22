@@ -9,6 +9,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
+// PostJSON 方法废弃，后面都使用beego的那些方法，beego的httplib做了改动，会复用transport
 func PostJSON(url string, timeout time.Duration, v interface{}, headers map[string]string) (response []byte, code int, err error) {
 	var bs []byte
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary

@@ -37,7 +37,6 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"encoding/xml"
-	"gopkg.in/yaml.v2"
 	"io"
 	"io/ioutil"
 	"log"
@@ -51,6 +50,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"gopkg.in/yaml.v2"
 )
 
 var defaultSetting = BeegoHTTPSettings{
@@ -360,6 +361,17 @@ func (b *BeegoHTTPRequest) JSONBody(obj interface{}) (*BeegoHTTPRequest, error) 
 		b.req.Header.Set("Content-Type", "application/json")
 	}
 	return b, nil
+}
+
+// JSONBodyQuiet adds request raw body encoding by JSON. ignore json marshal error
+func (b *BeegoHTTPRequest) JSONBodyQuiet(obj interface{}) *BeegoHTTPRequest {
+	if b.req.Body == nil && obj != nil {
+		byts, _ := json.Marshal(obj)
+		b.req.Body = ioutil.NopCloser(bytes.NewReader(byts))
+		b.req.ContentLength = int64(len(byts))
+		b.req.Header.Set("Content-Type", "application/json")
+	}
+	return b
 }
 
 func (b *BeegoHTTPRequest) buildURL(paramBody string) {

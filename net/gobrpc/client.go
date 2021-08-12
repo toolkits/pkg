@@ -55,7 +55,7 @@ func (c *RPCClient) Call(method string, args interface{}, reply interface{}, cal
 
 	select {
 	case <-time.After(timeout):
-		return fmt.Errorf("rpc call timeout")
+		return fmt.Errorf("timeout")
 	case err := <-done:
 		return err
 	}

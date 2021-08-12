@@ -2,7 +2,6 @@ package gobrpc
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"net/rpc"
 	"time"
@@ -56,8 +55,7 @@ func (c *RPCClient) Call(method string, args interface{}, reply interface{}, cal
 
 	select {
 	case <-time.After(timeout):
-		log.Printf("[W] rpc call timeout %v => %v", c.rpcClient, c.address)
-		return fmt.Errorf("timeout")
+		return fmt.Errorf("rpc call timeout")
 	case err := <-done:
 		return err
 	}

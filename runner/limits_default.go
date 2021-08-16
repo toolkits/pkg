@@ -13,7 +13,7 @@
 
 // +build !windows
 
-package irun
+package runner
 
 import (
 	"fmt"

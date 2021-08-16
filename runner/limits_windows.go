@@ -13,7 +13,7 @@
 
 // +build windows
 
-package irun
+package runner
 
 // FdLimits not supported on Windows
 func FdLimits() string {

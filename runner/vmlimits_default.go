@@ -14,7 +14,7 @@
 // +build !windows
 // +build !openbsd
 
-package irun
+package runner
 
 import (
 	"syscall"

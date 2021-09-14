@@ -22,7 +22,7 @@ var (
 // Init will init i18n support via input language.
 func Init(dictPath ...string) {
 	dp := path.Join(runner.Cwd, "etc", "i18n.json")
-	if len(dictPath) > 0 {
+	if len(dictPath) > 0 && dictPath[0] != "" {
 		dp = dictPath[0]
 	}
 

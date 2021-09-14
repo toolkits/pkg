@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// deprecated
 type PageError struct {
 	Message string
 }

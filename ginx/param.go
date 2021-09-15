@@ -8,6 +8,13 @@ import (
 	"github.com/toolkits/pkg/errorx"
 )
 
+func BindJSON(c *gin.Context, ptr interface{}) {
+	err := c.ShouldBindJSON(ptr)
+	if err != nil {
+		errorx.Bomb(http.StatusBadRequest, "cannot decode json body")
+	}
+}
+
 func UrlParamStr(c *gin.Context, field string) string {
 	val := c.Param(field)
 

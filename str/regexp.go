@@ -63,7 +63,7 @@ func Dangerous(s string) bool {
 		return true
 	}
 
-	if strings.Contains(s, "file://") {
+	if strings.Contains(s, "://") {
 		return true
 	}
 

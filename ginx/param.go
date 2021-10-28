@@ -11,7 +11,7 @@ import (
 func BindJSON(c *gin.Context, ptr interface{}) {
 	err := c.ShouldBindJSON(ptr)
 	if err != nil {
-		errorx.Bomb(http.StatusBadRequest, "json body invalid")
+		errorx.Bomb(http.StatusBadRequest, "json body invalid: %v", err)
 	}
 }
 

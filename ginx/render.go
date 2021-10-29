@@ -22,15 +22,29 @@ func NewRender(c *gin.Context, code ...int) Render {
 
 func (r Render) Message(v interface{}, a ...interface{}) {
 	if v == nil {
-		r.ctx.JSON(r.code, gin.H{"err": ""})
+		if r.code == 200 {
+			r.ctx.JSON(r.code, gin.H{"err": ""})
+		} else {
+			r.ctx.String(r.code, "")
+		}
 		return
 	}
 
 	switch t := v.(type) {
 	case string:
-		r.ctx.JSON(r.code, gin.H{"err": i18n.Sprintf(r.ctx.GetHeader("X-Language"), t, a...)})
+		msg := i18n.Sprintf(r.ctx.GetHeader("X-Language"), t, a...)
+		if r.code == 200 {
+			r.ctx.JSON(r.code, gin.H{"err": msg})
+		} else {
+			r.ctx.String(r.code, msg)
+		}
 	case error:
-		r.ctx.JSON(r.code, gin.H{"err": i18n.Sprintf(r.ctx.GetHeader("X-Language"), t.Error(), a...)})
+		msg := i18n.Sprintf(r.ctx.GetHeader("X-Language"), t.Error(), a...)
+		if r.code == 200 {
+			r.ctx.JSON(r.code, gin.H{"err": msg})
+		} else {
+			r.ctx.String(r.code, msg)
+		}
 	}
 }
 

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"os/exec"
 	"strings"
-	"syscall"
 	"time"
 )
 
@@ -39,13 +38,16 @@ func CmdRun(name string, arg ...string) error {
 // CmdRunT Command run with timeout
 func CmdRunT(timeout time.Duration, name string, arg ...string) (output string, err error, istimeout bool) {
 	cmd := exec.Command(name, arg...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 
 	var b bytes.Buffer
 	cmd.Stdout = &b
 	cmd.Stderr = &b
 
-	cmd.Start()
+	err = CmdStart(cmd)
+	if err != nil {
+		return
+	}
+
 	err, istimeout = WrapTimeout(cmd, timeout)
 	output = b.String()
 
@@ -53,23 +55,5 @@ func CmdRunT(timeout time.Duration, name string, arg ...string) (output string, 
 }
 
 func WrapTimeout(cmd *exec.Cmd, timeout time.Duration) (error, bool) {
-	var err error
-
-	done := make(chan error)
-	go func() {
-		done <- cmd.Wait()
-	}()
-
-	select {
-	case <-time.After(timeout):
-		go func() {
-			<-done // allow goroutine to exit
-		}()
-
-		// IMPORTANT: cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true} is necessary before cmd.Start()
-		err = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		return err, true
-	case err = <-done:
-		return err, false
-	}
+	return CmdWait(cmd, timeout)
 }

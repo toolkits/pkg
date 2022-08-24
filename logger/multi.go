@@ -16,8 +16,8 @@ func (self *multiBackend) Log(s Severity, msg []byte) {
 	}
 }
 
-func (self *multiBackend) close() {
+func (self *multiBackend) Close() {
 	for _, be := range self.bes {
-		be.close()
+		be.Close()
 	}
 }

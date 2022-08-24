@@ -34,7 +34,7 @@ const (
 
 type Backend interface {
 	Log(s Severity, msg []byte)
-	close()
+	Close()
 }
 
 type stdBackend struct{}
@@ -43,7 +43,7 @@ func (self *stdBackend) Log(s Severity, msg []byte) {
 	os.Stdout.Write(msg)
 }
 
-func (self *stdBackend) close() {}
+func (self *stdBackend) Close() {}
 
 type Logger struct {
 	s       Severity
@@ -284,7 +284,7 @@ func (l *Logger) SetSeverity(level interface{}) {
 
 func (l *Logger) Close() {
 	if l.backend != nil {
-		l.backend.close()
+		l.backend.Close()
 	}
 }
 

@@ -1,3 +1,4 @@
+//go:build linux || darwin || freebsd || openbsd || solaris
 // +build linux darwin freebsd openbsd solaris
 
 package logger
@@ -75,7 +76,7 @@ func (self *syslogBackend) Log(s Severity, msg []byte) {
 	}
 }
 
-func (self *syslogBackend) close() {
+func (self *syslogBackend) Close() {
 	for i := 0; i < numSeverity; i++ {
 		self.writer[i].Close()
 	}

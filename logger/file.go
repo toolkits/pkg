@@ -56,7 +56,7 @@ func (self *syncBuffer) write(b []byte) {
 
 type FileBackend struct {
 	mu            sync.Mutex
-	dir           string //directory for log files
+	dir           string // directory for log files
 	files         [numSeverity]syncBuffer
 	flushInterval time.Duration
 	rotateNum     int
@@ -78,7 +78,7 @@ func (self *FileBackend) Flush() {
 
 }
 
-func (self *FileBackend) close() {
+func (self *FileBackend) Close() {
 	self.Flush()
 }
 

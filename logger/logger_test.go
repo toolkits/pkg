@@ -25,7 +25,7 @@ func TestDefaultFileBackend(t *testing.T) {
 	conf.FileName = "/tmp/dlog-test/defaultFileBackend"
 	conf.FileRotateSize = 1024 * 1024 * 1024
 	conf.FileRotateCount = 20
-	//conf.FileFlushDuration = time.Second * 1
+	// conf.FileFlushDuration = time.Second * 1
 
 	Init(conf)
 	Info("Info")
@@ -46,11 +46,11 @@ func TestFileBackend(t *testing.T) {
 	conf.FileName = "/tmp/dlog-test/fileBackend"
 	conf.FileRotateSize = 1024 * 1024 * 1024
 	conf.FileRotateCount = 20
-	//conf.FileFlushDuration = time.Second * 1
+	// conf.FileFlushDuration = time.Second * 1
 
 	log, err := NewLoggerFromConfig(conf)
 	if err != nil {
-		fmt.Println("err when call NewLoggerFromConfig: [%s]", err.Error())
+		fmt.Printf("err when call NewLoggerFromConfig: [%s]\n", err.Error())
 		return
 	}
 
@@ -82,7 +82,7 @@ func TestBothFileBackend(t *testing.T) {
 	conf1.FileRotateCount = 20
 	log1, err := NewLoggerFromConfig(conf1)
 	if err != nil {
-		fmt.Println("err when call NewLoggerFromConfig: [%s]", err.Error())
+		fmt.Printf("err when call NewLoggerFromConfig: [%s]\n", err.Error())
 		return
 	}
 
@@ -94,7 +94,7 @@ func TestBothFileBackend(t *testing.T) {
 	conf2.FileRotateCount = 20
 	log2, err := NewLoggerFromConfig(conf2)
 	if err != nil {
-		fmt.Println("err when call NewLoggerFromConfig: [%s]", err.Error())
+		fmt.Printf("err when call NewLoggerFromConfig: [%s]\n", err.Error())
 		return
 	}
 

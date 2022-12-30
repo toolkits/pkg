@@ -1,3 +1,4 @@
+//go:build windows || plan9 || netbsd
 // +build windows plan9 netbsd
 
 package logger
@@ -16,7 +17,7 @@ func NewSyslogBackend(priorityStr string, tag string) (*syslogBackend, error) {
 func (self *syslogBackend) Log(s Severity, msg []byte) {
 }
 
-func (self *syslogBackend) close() {
+func (self *syslogBackend) Close() {
 }
 
 func (self *syslogBackend) tryPutInBuf(s Severity, msg []byte) {

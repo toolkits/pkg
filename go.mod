@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/garyburd/redigo v1.6.2
-	github.com/gin-gonic/gin v1.7.4
+	github.com/gin-gonic/gin v1.7.7
 	github.com/json-iterator/go v1.1.12
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/robfig/go-cache v0.0.0-20130306151617-9fc39e0dbf62

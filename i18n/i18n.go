@@ -83,5 +83,9 @@ func langTag(l string) language.Tag {
 
 // Sprintf formats according to a format specifier and returns the resulting string.
 func Sprintf(lang, format string, a ...interface{}) string {
+	if _, exists := printers[lang]; !exists {
+		return fmt.Sprintf(format, a...)
+	}
+
 	return printers[lang].Sprintf(format, a...)
 }

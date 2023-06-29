@@ -58,10 +58,6 @@ func DictFileRegister(filePath string) {
 func DictRegister(m map[string]map[string]string) {
 	for lang, dict := range m {
 		tag := langTag(lang)
-		if tag == language.English {
-			continue
-		}
-
 		cata := catalog.NewBuilder()
 		for k, v := range dict {
 			cata.SetString(tag, k, v)

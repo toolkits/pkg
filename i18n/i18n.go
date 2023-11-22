@@ -72,8 +72,12 @@ func langTag(l string) language.Tag {
 	switch strings.ToLower(l) {
 	case "zh", "cn", "zh_cn", "zh-cn":
 		return language.Chinese
-	case "zh_hk", "zh-hk":
+	case "zh_hk", "zh-hk", "zh_tw", "zh-tw":
 		return language.TraditionalChinese
+	case "ja", "jp", "ja_jp", "ja-jp":
+		return language.Japanese
+	case "ko", "kr", "ko_kr", "ko-kr":
+		return language.Korean
 	default:
 		return language.English
 	}

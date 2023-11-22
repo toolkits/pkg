@@ -70,8 +70,10 @@ func DictRegister(m map[string]map[string]string) {
 
 func langTag(l string) language.Tag {
 	switch strings.ToLower(l) {
-	case "zh", "cn":
+	case "zh", "cn", "zh_cn", "zh-cn":
 		return language.Chinese
+	case "zh_hk", "zh-hk":
+		return language.TraditionalChinese
 	default:
 		return language.English
 	}

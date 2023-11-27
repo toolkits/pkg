@@ -64,7 +64,7 @@ func (m *msg) SetMode(md mode) {
 
 // Time returns the "receive time" from the remote NTP server
 // specifed as host.  NTP client mode is used.
-func getTwoTime(host string, version byte) (time.Time, time.Time, error) {
+func getTwoTime(host string, version byte, timeout int64) (time.Time, time.Time, error) {
 	if version < 2 || version > 4 {
 		panic("ntp: invalid version number")
 	}
@@ -79,7 +79,7 @@ func getTwoTime(host string, version byte) (time.Time, time.Time, error) {
 		return time.Now(), time.Now(), err
 	}
 	defer con.Close()
-	con.SetDeadline(time.Now().Add(5 * time.Second))
+	con.SetDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
 
 	m := new(msg)
 	m.SetMode(client)
@@ -100,7 +100,7 @@ func getTwoTime(host string, version byte) (time.Time, time.Time, error) {
 	return t, transmitTime, nil
 }
 
-func getTime(host string, version byte) (time.Time, error) {
+func getTime(host string, version byte, timeout int64) (time.Time, error) {
 	if version < 2 || version > 4 {
 		panic("ntp: invalid version number")
 	}
@@ -115,8 +115,7 @@ func getTime(host string, version byte) (time.Time, error) {
 		return time.Now(), err
 	}
 	defer con.Close()
-	con.SetDeadline(time.Now().Add(5 * time.Second))
-
+	con.SetDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
 	m := new(msg)
 	m.SetMode(client)
 	m.SetVersion(version)
@@ -138,18 +137,18 @@ func getTime(host string, version byte) (time.Time, error) {
 // TimeV returns the "receive time" from the remote NTP server
 // specifed as host.  Use the NTP client mode with the requested
 // version number (2, 3, or 4).
-func NtpTimeV(host string, version byte) (time.Time, error) {
-	return getTime(host, version)
+func NtpTimeV(host string, version byte, timeout int64) (time.Time, error) {
+	return getTime(host, version, timeout)
 }
 
 // Time returns the "receive time" from the remote NTP server
 // specifed as host.  NTP client mode version 4 is used.
-func NtpTime(host string) (time.Time, error) {
-	return getTime(host, 4)
+func NtpTime(host string, timeout int64) (time.Time, error) {
+	return getTime(host, 4, timeout)
 }
 
 // Time returns the "receive time" from the remote NTP server
 // specifed as host.  NTP client mode version 4 is used.
-func NtpTwoTime(host string) (time.Time, time.Time, error) {
-	return getTwoTime(host, 4)
+func NtpTwoTime(host string, timeout int64) (time.Time, time.Time, error) {
+	return getTwoTime(host, 4, timeout)
 }

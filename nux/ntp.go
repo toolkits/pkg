@@ -134,21 +134,30 @@ func getTime(host string, version byte, timeout int64) (time.Time, error) {
 	return t, nil
 }
 
+func getTimeout(timeout []int64) int64 {
+	// If the timeout parameter is not provided or the timeout parameter is greater than 0
+	if len(timeout) != 1 {
+		return 5
+	} else {
+		return timeout[0]
+	}
+}
+
 // TimeV returns the "receive time" from the remote NTP server
 // specifed as host.  Use the NTP client mode with the requested
 // version number (2, 3, or 4).
-func NtpTimeV(host string, version byte, timeout int64) (time.Time, error) {
-	return getTime(host, version, timeout)
+func NtpTimeV(host string, version byte, timeout ...int64) (time.Time, error) {
+	return getTime(host, version, getTimeout(timeout))
 }
 
 // Time returns the "receive time" from the remote NTP server
 // specifed as host.  NTP client mode version 4 is used.
-func NtpTime(host string, timeout int64) (time.Time, error) {
-	return getTime(host, 4, timeout)
+func NtpTime(host string, timeout ...int64) (time.Time, error) {
+	return getTime(host, 4, getTimeout(timeout))
 }
 
 // Time returns the "receive time" from the remote NTP server
 // specifed as host.  NTP client mode version 4 is used.
-func NtpTwoTime(host string, timeout int64) (time.Time, time.Time, error) {
-	return getTwoTime(host, 4, timeout)
+func NtpTwoTime(host string, timeout ...int64) (time.Time, time.Time, error) {
+	return getTwoTime(host, 4, getTimeout(timeout))
 }

@@ -16,6 +16,7 @@ type LogConfig struct {
 	FileFlushDuration time.Duration
 	RotateByHour      bool
 	KeepHours         uint // make sense when RotateByHour is T
+	OutputToOneFile   bool
 }
 
 func initFromConfig(log *Logger,
@@ -36,7 +37,7 @@ func initFromConfig(log *Logger,
 		}
 		log.SetLogging(config.Level, sb)
 	} else if config.Type == "file" {
-		if fb, err = NewFileBackend(config.FileName); err != nil {
+		if fb, err = NewFileBackend(config.FileName, config.OutputToOneFile); err != nil {
 			return err
 		}
 		log.SetLogging(config.Level, fb)

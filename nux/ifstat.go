@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/toolkits/pkg/file"
-	"github.com/toolkits/pkg/sys"
+	"github.com/lwb0214/pkg/file"
+	"github.com/lwb0214/pkg/sys"
 )
 
 const (
@@ -51,9 +51,10 @@ func (this *NetIf) String() string {
 
 /*
 Inter-|   Receive                                                |  Transmit
- face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
-  eth0: 1990350    2838    0    0    0     0          0         0   401351    2218    0    0    0     0       0          0
-    lo:   26105     286    0    0    0     0          0         0    26105     286    0    0    0     0       0          0
+
+	face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+	 eth0: 1990350    2838    0    0    0     0          0         0   401351    2218    0    0    0     0       0          0
+	   lo:   26105     286    0    0    0     0          0         0    26105     286    0    0    0     0       0          0
 */
 func NetIfs(onlyPrefix []string) ([]*NetIf, error) {
 	contents, err := ioutil.ReadFile("/proc/net/dev")

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/toolkits/pkg/errorx"
+	"github.com/lwb0214/pkg/errorx"
 )
 
 func BindJSON(c *gin.Context, ptr interface{}) {

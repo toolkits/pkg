@@ -49,6 +49,8 @@ func (self *syncBuffer) write(b []byte) {
 			self.cur = 0
 		}
 		self.count = 0
+		self.Writer.Write([]byte(fmt.Sprintf("rotate %s to %s\n", self.filePath,
+			self.filePath+fmt.Sprintf(".%03d", self.cur))))
 	}
 	self.count += uint64(len(b))
 	self.Writer.Write(b)
@@ -122,6 +124,8 @@ func (self *FileBackend) rotateByHourDaemon() {
 			if self.lastCheck < check {
 				if self.outputToOneFile {
 					os.Rename(self.file.filePath, self.file.filePath+fmt.Sprintf(".%d", self.lastCheck))
+					self.file.Writer.Write([]byte(fmt.Sprintf("rotate %s to %s\n", self.file.filePath,
+						self.file.filePath+fmt.Sprintf(".%d", self.lastCheck))))
 				} else {
 					for i := 0; i < numSeverity; i++ {
 						os.Rename(self.files[i].filePath, self.files[i].filePath+fmt.Sprintf(".%d", self.lastCheck))

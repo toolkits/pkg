@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/toolkits/pkg/file"
-	"github.com/toolkits/pkg/runner"
-	"github.com/toolkits/pkg/slice"
+	"github.com/lwb0214/pkg/file"
+	"github.com/lwb0214/pkg/runner"
+	"github.com/lwb0214/pkg/slice"
 )
 
 func main() {

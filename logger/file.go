@@ -57,30 +57,23 @@ func (self *syncBuffer) write(b []byte) {
 }
 
 type FileBackend struct {
-	mu            sync.Mutex
-	dir           string // directory for log files
-	files         [numSeverity]syncBuffer
-	flushInterval time.Duration
-	rotateNum     int
-	maxSize       uint64
-	fall          bool
-	rotateByHour  bool
-	lastCheck     uint64
-	reg           *regexp.Regexp // for rotatebyhour log del...
-	keepHours     uint           // keep how many hours old, only make sense when rotatebyhour is T
-
+	mu              sync.Mutex
+	dir             string // directory for log files
+	files           [numSeverity]syncBuffer
+	flushInterval   time.Duration
+	rotateNum       int
+	maxSize         uint64
+	fall            bool
+	rotateByHour    bool
+	lastCheck       uint64
+	reg             *regexp.Regexp // for rotatebyhour log del...
+	keepHours       uint           // keep how many hours old, only make sense when rotatebyhour is T
 	outputToOneFile bool
-	file            syncBuffer
 }
 
 func (self *FileBackend) Flush() {
 	self.mu.Lock()
 	defer self.mu.Unlock()
-	if self.outputToOneFile {
-		self.file.Flush()
-		self.file.Sync()
-		return
-	}
 	for i := 0; i < numSeverity; i++ {
 		self.files[i].Flush()
 		self.files[i].Sync()
@@ -122,14 +115,8 @@ func (self *FileBackend) rotateByHourDaemon() {
 		if self.rotateByHour {
 			check := getLastCheck(time.Now())
 			if self.lastCheck < check {
-				if self.outputToOneFile {
-					os.Rename(self.file.filePath, self.file.filePath+fmt.Sprintf(".%d", self.lastCheck))
-					self.file.Writer.Write([]byte(fmt.Sprintf("rotate %s to %s\n", self.file.filePath,
-						self.file.filePath+fmt.Sprintf(".%d", self.lastCheck))))
-				} else {
-					for i := 0; i < numSeverity; i++ {
-						os.Rename(self.files[i].filePath, self.files[i].filePath+fmt.Sprintf(".%d", self.lastCheck))
-					}
+				for i := 0; i < numSeverity; i++ {
+					os.Rename(self.files[i].filePath, self.files[i].filePath+fmt.Sprintf(".%d", self.lastCheck))
 				}
 				self.lastCheck = check
 			}
@@ -151,10 +138,6 @@ func (self *FileBackend) rotateByHourDaemon() {
 
 func (self *FileBackend) monitorFiles() {
 	for range time.NewTicker(time.Second * 5).C {
-		if self.outputToOneFile {
-			self.monitorFile(self.file.filePath, &self.file)
-			continue
-		}
 		for i := 0; i < numSeverity; i++ {
 			fileName := path.Join(self.dir, severityName[i]+".log")
 			self.monitorFile(fileName, &self.files[i])
@@ -177,7 +160,7 @@ func (self *FileBackend) monitorFile(fileName string, sb *syncBuffer) {
 func (self *FileBackend) Log(s Severity, msg []byte) {
 	self.mu.Lock()
 	if self.outputToOneFile {
-		self.file.write(msg)
+		self.files[ALL].write(msg)
 	} else {
 		switch s {
 		case FATAL:
@@ -237,23 +220,14 @@ func NewFileBackend(dir string, outputToOneFile bool) (*FileBackend, error) {
 	}
 	var fb FileBackend
 	fb.dir = dir
-	if outputToOneFile {
-		fb.outputToOneFile = true
-		fileName := path.Join(dir, "n9e.log")
+	fb.outputToOneFile = outputToOneFile
+	for i := 0; i < numSeverity; i++ {
+		fileName := path.Join(dir, severityName[i]+".log")
 		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			return nil, err
 		}
-		fb.file = newSyncBuffer(f, &fb, fileName)
-	} else {
-		for i := 0; i < numSeverity; i++ {
-			fileName := path.Join(dir, severityName[i]+".log")
-			f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-			if err != nil {
-				return nil, err
-			}
-			fb.files[i] = newSyncBuffer(f, &fb, fileName)
-		}
+		fb.files[i] = newSyncBuffer(f, &fb, fileName)
 	}
 
 	// default
@@ -264,7 +238,7 @@ func NewFileBackend(dir string, outputToOneFile bool) (*FileBackend, error) {
 	fb.lastCheck = 0
 	// init reg to match files
 	// ONLY cover this centry...
-	fb.reg = regexp.MustCompile("(INFO|ERROR|WARNING|DEBUG|FATAL|n9e)\\.log\\.20[0-9]{8}")
+	fb.reg = regexp.MustCompile("(INFO|ERROR|WARNING|DEBUG|FATAL|ALL)\\.log\\.20[0-9]{8}")
 	fb.keepHours = 24 * 7
 
 	go fb.flushDaemon()

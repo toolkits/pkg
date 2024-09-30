@@ -49,8 +49,6 @@ func (self *syncBuffer) write(b []byte) {
 			self.cur = 0
 		}
 		self.count = 0
-		self.Writer.Write([]byte(fmt.Sprintf("rotate %s to %s\n", self.filePath,
-			self.filePath+fmt.Sprintf(".%03d", self.cur))))
 	}
 	self.count += uint64(len(b))
 	self.Writer.Write(b)

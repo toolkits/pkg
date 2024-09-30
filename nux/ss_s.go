@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/lwb0214/pkg/file"
-	"github.com/lwb0214/pkg/sys"
+	"github.com/toolkits/pkg/file"
+	"github.com/toolkits/pkg/sys"
 )
 
 func SocketStatSummary() (m map[string]uint64, err error) {

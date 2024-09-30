@@ -2,7 +2,7 @@ package ginx
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lwb0214/pkg/i18n"
+	"github.com/toolkits/pkg/i18n"
 )
 
 type Render struct {

@@ -37,7 +37,7 @@ func initFromConfig(log *Logger,
 		}
 		log.SetLogging(config.Level, sb)
 	} else if config.Type == "file" {
-		if fb, err = NewFileBackend(config.FileName, config.OutputToOneFile); err != nil {
+		if fb, err = NewFileBackend(config.FileName); err != nil {
 			return err
 		}
 		log.SetLogging(config.Level, fb)
@@ -45,6 +45,7 @@ func initFromConfig(log *Logger,
 		fb.SetFlushDuration(config.FileFlushDuration)
 		fb.SetRotateByHour(config.RotateByHour)
 		fb.SetKeepHours(config.KeepHours)
+		fb.OutputToOneFile(config.OutputToOneFile)
 	} else {
 		return fmt.Errorf("unknown log type: %s", config.Type)
 	}

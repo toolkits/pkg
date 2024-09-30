@@ -212,13 +212,16 @@ func (self *FileBackend) SetFlushDuration(t time.Duration) {
 	}
 }
 
-func NewFileBackend(dir string, outputToOneFile bool) (*FileBackend, error) {
+func (self *FileBackend) OutputToOneFile(flag bool) {
+	self.outputToOneFile = flag
+}
+
+func NewFileBackend(dir string) (*FileBackend, error) {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return nil, err
 	}
 	var fb FileBackend
 	fb.dir = dir
-	fb.outputToOneFile = outputToOneFile
 	for i := 0; i < numSeverity; i++ {
 		fileName := path.Join(dir, severityName[i]+".log")
 		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

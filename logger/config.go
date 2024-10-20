@@ -16,6 +16,7 @@ type LogConfig struct {
 	FileFlushDuration time.Duration
 	RotateByHour      bool
 	KeepHours         uint // make sense when RotateByHour is T
+	OutputToOneFile   bool
 }
 
 func initFromConfig(log *Logger,
@@ -44,6 +45,7 @@ func initFromConfig(log *Logger,
 		fb.SetFlushDuration(config.FileFlushDuration)
 		fb.SetRotateByHour(config.RotateByHour)
 		fb.SetKeepHours(config.KeepHours)
+		fb.OutputToOneFile(config.OutputToOneFile)
 	} else {
 		return fmt.Errorf("unknown log type: %s", config.Type)
 	}

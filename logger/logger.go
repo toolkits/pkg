@@ -18,6 +18,7 @@ const (
 	WARNING
 	INFO
 	DEBUG
+	ALL
 )
 
 var severityName = []string{
@@ -26,10 +27,11 @@ var severityName = []string{
 	WARNING: "WARNING",
 	INFO:    "INFO",
 	DEBUG:   "DEBUG",
+	ALL:     "ALL",
 }
 
 const (
-	numSeverity = 5
+	numSeverity = 6
 )
 
 type Backend interface {
@@ -56,7 +58,7 @@ type Logger struct {
 	logToStderr bool
 }
 
-//resued buffer for fast format the output string
+// resued buffer for fast format the output string
 type buffer struct {
 	bytes.Buffer
 	tmp  [64]byte
@@ -337,7 +339,7 @@ func (l *Logger) SetLogging(level interface{}, backend Backend) {
 	l.backend = backend
 }
 
-/////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////
 // depth version, only a low level api
 func (l *Logger) LogDepth(s Severity, depth int, format string, args ...interface{}) {
 	l.printfDepth(s, depth+1, format, args...)

@@ -27,7 +27,7 @@ func ConfigFromEnv() *Config {
 	hosts := os.Getenv("WAIT_HOSTS")
 	hosts = strings.ReplaceAll(hosts, ",", " ")
 	return &Config{
-		Hosts:                strings.Split(hosts, ","),
+		Hosts:                strings.Fields(hosts),
 		GlobalTimeout:        envTimeParse("WAIT_TIMEOUT", time.Second*30),
 		TcpConnectionTimeout: envTimeParse("WAIT_HOST_CONNECT_TIMEOUT", time.Second*5),
 		WaitBefore:           envTimeParse("WAIT_BEFORE", 0),
